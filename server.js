@@ -1,18 +1,29 @@
 const dotenv = require('dotenv');
 dotenv.config();
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const { default: mongoose } = require('mongoose');
+const cookieParser = require('cookie-parser');
 const usersRouter = require('./routes/users');
+const jwtRouter = require('./routes/jwt');
 const connectDB = require('./db/connection.js');
 
 connectDB();
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
+app.use('/api/jwt', jwtRouter);
 
 mongoose.connection.once('open', () => {
   app.listen(process.env.PORT || 5000, () => {

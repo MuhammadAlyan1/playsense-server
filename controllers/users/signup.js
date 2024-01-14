@@ -1,5 +1,8 @@
 const User = require('../../db/model/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const generateAccessToken = require('../../utils/generateAccessToken');
+const generateRefreshToken = require('../../utils/generateRefreshToken');
 
 async function signup(req, res) {
   const { email, password, username } = req.body;
@@ -39,20 +42,35 @@ async function signup(req, res) {
       email,
       username,
       password: hashedPassword,
-      role: 'user'
+      roles: ['user']
     });
+
+    const accessToken = generateAccessToken({
+      id: newUser._id,
+      roles: newUser.roles
+    });
+
+    const refreshToken = generateRefreshToken({
+      id: newUser._id,
+      roles: newUser.roles
+    });
+
+    await User.findByIdAndUpdate({ _id: newUser._id }, { refreshToken });
+
+    res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
 
     return res.status(201).json({
       success: true,
-      data: newUser,
-      message: 'Successfully created new user'
+      data: {},
+      message: 'Successfully created new user.'
     });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
       success: false,
       data: {},
-      message: 'There was an error while creating an account'
+      message: 'There was an error while creating an account.'
     });
   }
 }
