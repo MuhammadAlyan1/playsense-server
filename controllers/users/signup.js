@@ -56,13 +56,18 @@ async function signup(req, res) {
     });
 
     await User.findByIdAndUpdate({ _id: newUser._id }, { refreshToken });
-
     res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
-
     return res.status(201).json({
       success: true,
-      data: {},
+      data: {
+        userId: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+        roles: newUser.roles,
+        timestamp: newUser.timestamp,
+        accessToken: accessToken
+      },
       message: 'Successfully created new user.'
     });
   } catch (error) {

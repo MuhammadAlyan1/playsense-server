@@ -6,6 +6,7 @@ const generateRefreshToken = require('../../utils/generateRefreshToken');
 
 async function signin(req, res) {
   const { email, password } = req.body;
+
   if (!email || !password) {
     return res
       .status(400)
@@ -51,7 +52,14 @@ async function signin(req, res) {
 
     return res.status(200).json({
       success: true,
-      data: {},
+      data: {
+        userId: user._id,
+        username: user.username,
+        email: user.email,
+        roles: user.roles,
+        timestamp: user.timestamp,
+        accessToken: accessToken
+      },
       message: 'Successfully logged in.'
     });
   } catch (error) {

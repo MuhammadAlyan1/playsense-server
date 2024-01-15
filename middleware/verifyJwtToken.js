@@ -10,7 +10,7 @@ function verifyJwtToken(req, res, next) {
       data: {}
     });
   }
-
+  console.log('ACCESS TOKEN: ', accessToken);
   jwt.verify(
     accessToken,
     process.env.JWT_ACCESS_TOKEN_SECRET_KEY,

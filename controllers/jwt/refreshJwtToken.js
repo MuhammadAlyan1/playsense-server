@@ -45,7 +45,7 @@ async function refreshJwtToken(req, res) {
 
       return res.status(200).json({
         success: true,
-        data: {},
+        data: { accessToken: newAccessToken },
         message: 'Successfully generated new access token.'
       });
     }
