@@ -8,6 +8,7 @@ const { default: mongoose } = require('mongoose');
 const cookieParser = require('cookie-parser');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
+const profileRouter = require('./routes/profile');
 const jwtRouter = require('./routes/jwt');
 const connectDB = require('./db/connection.js');
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/profile', profileRouter);
 app.use('/api/jwt', jwtRouter);
 
 mongoose.connection.once('open', () => {

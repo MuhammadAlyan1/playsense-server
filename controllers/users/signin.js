@@ -56,6 +56,7 @@ async function signin(req, res) {
         userId: user._id,
         username: user.username,
         email: user.email,
+        profileId: user.profileId,
         roles: user.roles,
         timestamp: user.timestamp,
         accessToken: accessToken

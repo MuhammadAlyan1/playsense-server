@@ -64,6 +64,7 @@ async function signup(req, res) {
         userId: newUser._id,
         username: newUser.username,
         email: newUser.email,
+        profileId: newUser.profileId,
         roles: newUser.roles,
         timestamp: newUser.timestamp,
         accessToken: accessToken

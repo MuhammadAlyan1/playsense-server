@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
   {
+    profileId: {
+      type: mongoose.Schema.Types.ObjectId,
+      unique: [true, 'Profile id is already in use.']
+    },
     username: {
       type: String,
       require: [true, 'Please enter username'],
