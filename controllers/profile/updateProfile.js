@@ -3,7 +3,9 @@ const User = require('../../db/model/user');
 
 const updateProfile = async (req, res) => {
   const user = req.user;
-  const userId = user.id;
+  const userId = user?.id;
+  const profileId = user?.profileId;
+
   const {
     profilePicture,
     banner,
@@ -21,8 +23,6 @@ const updateProfile = async (req, res) => {
   } = req.body;
 
   try {
-    const { profileId } = req.params;
-
     const existingProfile = await Profile.findById(profileId);
 
     if (!existingProfile) {

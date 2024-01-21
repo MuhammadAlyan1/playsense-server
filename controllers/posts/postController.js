@@ -3,7 +3,7 @@ const Comment = require('../../db/model/comment');
 
 async function postController(req, res) {
   const user = req.user;
-  const userId = user.id;
+  const profileId = user.profileId;
   const { postId } = req.params;
   const { like, dislike, comment, commentContents } = req.body;
 
@@ -30,10 +30,13 @@ async function postController(req, res) {
     }
 
     if (like) {
-      const isLiked = post.likedBy.includes(userId);
+      const isLiked = post.likedBy.includes(profileId);
       const update = isLiked
-        ? { $pull: { likedBy: userId } }
-        : { $addToSet: { likedBy: userId }, $pull: { dislikedBy: userId } };
+        ? { $pull: { likedBy: profileId } }
+        : {
+            $addToSet: { likedBy: profileId },
+            $pull: { dislikedBy: profileId }
+          };
 
       const updatedPost = await Post.findByIdAndUpdate(postId, update, {
         new: true
@@ -49,11 +52,14 @@ async function postController(req, res) {
     }
 
     if (dislike) {
-      const isDisliked = post.dislikedBy.includes(userId);
+      const isDisliked = post.dislikedBy.includes(profileId);
 
       const update = isDisliked
-        ? { $pull: { dislikedBy: userId } }
-        : { $addToSet: { dislikedBy: userId }, $pull: { likedBy: userId } };
+        ? { $pull: { dislikedBy: profileId } }
+        : {
+            $addToSet: { dislikedBy: profileId },
+            $pull: { likedBy: profileId }
+          };
 
       const updatedPost = await Post.findByIdAndUpdate(postId, update, {
         new: true
@@ -79,7 +85,7 @@ async function postController(req, res) {
 
       const newComment = await Comment.create({
         content: commentContents,
-        userId
+        profileId
       });
 
       const updatedPost = await Post.findByIdAndUpdate(

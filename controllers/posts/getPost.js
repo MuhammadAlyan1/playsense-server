@@ -18,15 +18,13 @@ const getPostWithComments = async (req, res) => {
         path: 'comments',
         model: 'Comment',
         populate: {
-          path: 'userId',
-          model: 'User',
-          select: '-password -accessToken -refreshToken'
+          path: 'profileId',
+          model: 'Profile'
         }
       })
       .populate({
-        path: 'userId',
-        model: 'User',
-        select: '-password -accessToken -refreshToken'
+        path: 'profileId',
+        model: 'Profile'
       });
 
     if (!post) {

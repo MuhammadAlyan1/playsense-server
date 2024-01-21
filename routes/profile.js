@@ -6,11 +6,11 @@ const getProfile = require('../controllers/profile/getProfile');
 const createProfile = require('../controllers/profile/createProfile');
 const updateProfile = require('../controllers/profile/updateProfile');
 
-router.get('/:userId', getProfile);
+router.get('/:profileId', getProfile);
 
 router.post('/', verifyJwtToken, createProfile);
 
-router.put('/:profileId', verifyJwtToken, updateProfile);
+router.put('/', verifyJwtToken, updateProfile);
 
 // router.post('/feedback/:profileId', verifyJwtToken, profileController);
 

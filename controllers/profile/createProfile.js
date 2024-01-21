@@ -3,7 +3,7 @@ const User = require('../../db/model/user');
 
 const createProfile = async (req, res) => {
   const user = req.user;
-  const userId = user.id;
+  const profileId = user.profileId;
 
   try {
     const {
@@ -22,16 +22,16 @@ const createProfile = async (req, res) => {
       mousepad
     } = req.body;
 
-    if (!userId) {
+    if (!profileId) {
       return res.status(400).json({
         success: false,
         data: {},
-        message: 'Please enter userId'
+        message: 'Please enter profileId'
       });
     }
 
     const newProfile = await Profile.create({
-      userId,
+      profileId,
       profilePicture,
       banner,
       platform,
@@ -48,7 +48,7 @@ const createProfile = async (req, res) => {
     });
 
     await User.findByIdAndUpdate(
-      { _id: userId },
+      { _id: profileId },
       { profileId: newProfile?._id }
     );
 

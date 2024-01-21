@@ -18,10 +18,10 @@ const postSchema = new mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Comment'
     },
-    userId: {
+    profileId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'Please enter userId']
+      ref: 'Profile',
+      required: [true, 'Please enter profileId']
     }
   },
   { timestamps: true }

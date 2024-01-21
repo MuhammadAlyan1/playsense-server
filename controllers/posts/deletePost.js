@@ -3,7 +3,7 @@ const { ObjectId } = require('mongoose').Types;
 
 async function deletePost(req, res) {
   const user = req.user;
-  const userId = user?.id;
+  const profileId = user?.id;
 
   const { postId } = req.params;
 
@@ -22,10 +22,10 @@ async function deletePost(req, res) {
         .json({ success: false, data: {}, message: 'Post does not exist' });
     }
 
-    console.log('POST ID: ', post.userId, 'USER ID: ', userId);
+    console.log('POST ID: ', post.profileId, 'USER ID: ', profileId);
 
-    // if (!user.roles.includes('admin') && post?.userId?.toString() !== userId) {
-    if (post?.userId?.toString() !== userId) {
+    // if (!user.roles.includes('admin') && post?.profileId?.toString() !== profileId) {
+    if (post?.profileId?.toString() !== profileId) {
       return res.status(400).json({
         success: false,
         data: {},

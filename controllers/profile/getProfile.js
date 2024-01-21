@@ -3,30 +3,17 @@ const User = require('../../db/model/user');
 
 const getProfile = async (req, res) => {
   try {
-    const { userId } = req.params;
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, data: {}, message: 'User does not exists' });
-    }
-
-    const profileId = user.profileId;
+    const { profileId } = req.params;
 
     if (!profileId) {
       return res.status(400).json({
         success: false,
         data: {},
-        message: 'User does not have a profile'
+        message: 'Profile does not exists'
       });
     }
 
-    const profile = await Profile.findById(profileId).populate('userId', [
-      'username',
-      'email'
-    ]);
+    const profile = await Profile.findById({ _id: profileId });
 
     return res.status(201).json({
       success: true,

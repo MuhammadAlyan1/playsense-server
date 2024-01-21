@@ -2,12 +2,18 @@ const Post = require('../../db/model/post');
 
 async function createPost(req, res) {
   const user = req.user;
-  const userId = user.id;
+  const profileId = user.profileId;
   const { contents } = req.body;
 
-  console.log({ userId, contents });
-  console.log(req.body);
-  if (!contents || !userId) {
+  if (!profileId) {
+    return res.status(400).json({
+      success: false,
+      data: {},
+      message: 'Please set up your profile.'
+    });
+  }
+
+  if (!contents || !profileId) {
     return res.status(400).json({
       success: false,
       data: {},
@@ -18,7 +24,7 @@ async function createPost(req, res) {
   try {
     const newPost = await Post.create({
       contents,
-      userId
+      profileId
     });
 
     return res.status(201).json({

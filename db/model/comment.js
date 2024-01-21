@@ -6,10 +6,10 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please enter comment content']
     },
-    userId: {
+    profileId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'Please enter userId']
+      ref: 'Profile',
+      required: [true, 'Please enter profileId']
     }
   },
   { timestamps: true }

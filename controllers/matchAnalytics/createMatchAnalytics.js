@@ -2,7 +2,7 @@ const MatchAnalytics = require('../../db/model/matchAnalytics');
 
 const createMatchAnalytics = async (req, res) => {
   const user = req.user;
-  const userId = user.id;
+  const profileId = user.profileId;
 
   const {
     map,
@@ -14,8 +14,16 @@ const createMatchAnalytics = async (req, res) => {
     mapCoordinates
   } = req.body;
 
+  if (!profileId) {
+    return res.status(400).json({
+      success: false,
+      data: {},
+      message: 'Please set up your profile.'
+    });
+  }
+
   if (
-    !userId ||
+    !profileId ||
     !map ||
     !mode ||
     !eliminationReason ||
@@ -44,7 +52,7 @@ const createMatchAnalytics = async (req, res) => {
 
   try {
     const newMatchAnalytics = await MatchAnalytics.create({
-      userId,
+      profileId,
       kills,
       assists,
       downs,

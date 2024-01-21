@@ -8,6 +8,28 @@ const profileSchema = new mongoose.Schema(
       required: [true, 'Please enter userId'],
       unique: true
     },
+    username: {
+      type: String,
+      require: [true, 'Please enter username'],
+      unique: [true, 'User already exists']
+    },
+    roles: {
+      type: [
+        {
+          type: String,
+          enum: [
+            'user',
+            'moderator',
+            'admin',
+            'game developer',
+            'content creator',
+            'coach',
+            'esport elite'
+          ]
+        }
+      ],
+      default: ['user']
+    },
 
     platform: {
       type: String,
@@ -16,55 +38,70 @@ const profileSchema = new mongoose.Schema(
     },
 
     bio: {
-      type: String
+      type: String,
+      default: "Hey there! I'm using PlaySense."
     },
 
     profilePicture: {
-      type: String
+      type: String,
+      default:
+        'https://res.cloudinary.com/dcc8txmdw/image/upload/v1705819981/playsense-profile/vgiadrbjgmgd6qhdwoy2.jpg'
     },
 
     banner: {
-      type: String
+      type: String,
+      default:
+        'https://res.cloudinary.com/dcc8txmdw/image/upload/v1705819985/playsense-profile/bozzoqaani8tgamqdqfg.jpg'
     },
 
     country: {
-      type: String
+      type: String,
+      default: 'Pakistan'
     },
 
     twitchUrl: {
-      type: String
+      type: String,
+      default: 'https://www.twitch.tv/'
     },
 
     youtubeUrl: {
-      type: String
+      type: String,
+      default: 'https://www.youtube.com/'
     },
 
     twitterUrl: {
-      type: String
+      type: String,
+      default: 'https://twitter.com/'
     },
 
     discordUsername: {
-      type: String
+      type: String,
+      default: 'PlaySense'
     },
 
     monitor: {
-      type: String
+      type: String,
+      default: ''
     },
 
     headphones: {
-      type: String
+      type: String,
+      default: ''
     },
 
     keyboard: {
-      type: String
+      type: String,
+      default: ''
     },
 
     mouse: {
-      type: String
+      type: String,
+      default: ''
     },
 
     mousepad: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   { timestamps: true }

@@ -1,4 +1,5 @@
 const User = require('../../db/model/user');
+const Profile = require('../../db/model/profile');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const generateAccessToken = require('../../utils/generateAccessToken');
@@ -37,15 +38,18 @@ async function signin(req, res) {
 
     const accessToken = generateAccessToken({
       id: user._id,
+      profileId: user.profileId,
       roles: user.roles
     });
 
     const refreshToken = generateRefreshToken({
       id: user._id,
+      profileId: user.profileId,
       roles: user.roles
     });
 
     await User.findByIdAndUpdate({ _id: user._id }, { refreshToken });
+    const userProfile = await Profile.findOne({ userId: user._id });
 
     res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
@@ -53,12 +57,25 @@ async function signin(req, res) {
     return res.status(200).json({
       success: true,
       data: {
-        userId: user._id,
-        username: user.username,
-        email: user.email,
-        profileId: user.profileId,
-        roles: user.roles,
-        timestamp: user.timestamp,
+        _id: userProfile._id,
+        userId: userProfile.userId,
+        username: userProfile.username,
+        roles: userProfile.roles,
+        platform: userProfile.platform,
+        bio: userProfile.bio,
+        profilePicture: userProfile.profilePicture,
+        banner: userProfile.banner,
+        country: userProfile.country,
+        twitchUrl: userProfile.twitchUrl,
+        youtubeUrl: userProfile.youtubeUrl,
+        twitterUrl: userProfile.twitterUrl,
+        discordUsername: userProfile.discordUsername,
+        monitor: userProfile.monitor,
+        keyboard: userProfile.keyboard,
+        mouse: userProfile.mouse,
+        mousepad: userProfile.mousepad,
+        createdAt: userProfile.createdAt,
+        updatedAt: userProfile.updatedAt,
         accessToken: accessToken
       },
       message: 'Successfully logged in.'

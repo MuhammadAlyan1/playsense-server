@@ -1,8 +1,14 @@
 const Post = require('../../db/model/post');
 
 async function getAllPosts(req, res) {
+  const { profileId } = req.body;
   try {
-    const posts = await Post.find({});
+    let posts = [];
+    if (profileId) {
+      posts = await Post.find({ profileId });
+    } else {
+      posts = await Post.find({});
+    }
 
     if (posts.length === 0) {
       return res
