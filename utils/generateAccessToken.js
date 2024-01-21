@@ -4,7 +4,7 @@ function generateAccessToken(data) {
   const accessToken = jwt.sign(
     { ...data },
     process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
-    { expiresIn: '15m' }
+    { expiresIn: '24h' }
   );
 
   return accessToken;

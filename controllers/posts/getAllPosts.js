@@ -1,16 +1,16 @@
 const Post = require('../../db/model/post');
 
 async function getAllPosts(req, res) {
-  const { profileId } = req.body;
+  const { profileId } = req.query;
   try {
     let posts = [];
     if (profileId) {
-      posts = await Post.find({ profileId }).populate({
+      posts = await Post.find({ profileId }).sort({ createdAt: -1 }).populate({
         path: 'profileId',
         model: 'Profile'
       });
     } else {
-      posts = await Post.find({}).populate({
+      posts = await Post.find({}).sort({ createdAt: -1 }).populate({
         path: 'profileId',
         model: 'Profile'
       });

@@ -72,6 +72,7 @@ async function signin(req, res) {
         discordUsername: userProfile.discordUsername,
         monitor: userProfile.monitor,
         keyboard: userProfile.keyboard,
+        headphones: userProfile.headphones,
         mouse: userProfile.mouse,
         mousepad: userProfile.mousepad,
         createdAt: userProfile.createdAt,

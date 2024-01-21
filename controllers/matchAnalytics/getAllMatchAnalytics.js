@@ -1,13 +1,15 @@
 const MatchAnalytics = require('../../db/model/matchAnalytics');
 
 async function getAllMatchAnalytics(req, res) {
-  const { profileId } = req.body;
+  const { profileId } = req.query;
   try {
     let matchAnalytics = [];
     if (profileId) {
-      matchAnalytics = await MatchAnalytics.find({ profileId });
+      matchAnalytics = await MatchAnalytics.find({ profileId }).sort({
+        createdAt: -1
+      });
     } else {
-      matchAnalytics = await MatchAnalytics.find({});
+      matchAnalytics = await MatchAnalytics.find({}).sort({ createdAt: -1 });
     }
 
     if (matchAnalytics.length === 0) {

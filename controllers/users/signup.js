@@ -87,6 +87,7 @@ async function signup(req, res) {
         discordUsername: newProfile.discordUsername,
         monitor: newProfile.monitor,
         keyboard: newProfile.keyboard,
+        headphones: userProfile.headphones,
         mouse: newProfile.mouse,
         mousepad: newProfile.mousepad,
         createdAt: newProfile.createdAt,
