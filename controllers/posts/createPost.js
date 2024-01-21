@@ -27,9 +27,16 @@ async function createPost(req, res) {
       profileId
     });
 
+    const newPopulatedPost = await Post.findById({ _id: newPost._id }).populate(
+      {
+        path: 'profileId',
+        model: 'Profile'
+      }
+    );
+
     return res.status(201).json({
       success: true,
-      data: newPost,
+      data: newPopulatedPost,
       message: 'Successfully created post'
     });
   } catch (error) {

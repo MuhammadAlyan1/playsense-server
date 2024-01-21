@@ -5,9 +5,15 @@ async function getAllPosts(req, res) {
   try {
     let posts = [];
     if (profileId) {
-      posts = await Post.find({ profileId });
+      posts = await Post.find({ profileId }).populate({
+        path: 'profileId',
+        model: 'Profile'
+      });
     } else {
-      posts = await Post.find({});
+      posts = await Post.find({}).populate({
+        path: 'profileId',
+        model: 'Profile'
+      });
     }
 
     if (posts.length === 0) {
