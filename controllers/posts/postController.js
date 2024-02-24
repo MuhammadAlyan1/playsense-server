@@ -94,9 +94,14 @@ async function postController(req, res) {
         { new: true }
       );
 
+      const populatedComment = await Comment.findById(newComment._id).populate({
+        path: 'profileId',
+        model: 'Profile'
+      });
+
       return res.status(200).json({
         success: true,
-        data: updatedPost,
+        data: populatedComment,
         message: 'Comment added successfully'
       });
     }

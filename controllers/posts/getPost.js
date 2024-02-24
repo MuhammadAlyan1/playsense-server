@@ -13,7 +13,6 @@ const getPostWithComments = async (req, res) => {
     }
 
     const post = await Post.findById(postId)
-      .select('-likedBy -dislikedBy')
       .populate({
         path: 'comments',
         model: 'Comment',
