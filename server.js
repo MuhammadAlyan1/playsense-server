@@ -8,6 +8,7 @@ const { default: mongoose } = require('mongoose');
 const cookieParser = require('cookie-parser');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
+const feedbackRouter = require('./routes/feedback');
 const profileRouter = require('./routes/profile');
 const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/feedback', feedbackRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/match-analytics', matchAnalyticsRouter);
 app.use('/api/jwt', jwtRouter);
