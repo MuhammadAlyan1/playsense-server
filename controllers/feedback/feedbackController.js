@@ -5,7 +5,7 @@ async function feedbackController(req, res) {
   const user = req.user;
   const profileId = user.profileId;
   const { feedbackId } = req.params;
-  const { like, dislike, comment, commentContents } = req.body;
+  const { like, dislike, comment, commentContents, status } = req.body;
 
   if (!feedbackId) {
     return res
@@ -16,20 +16,18 @@ async function feedbackController(req, res) {
   try {
     const feedback = await Feedback.findById(feedbackId);
     if (!feedback) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          data: {},
-          message: 'Feedback does not exists'
-        });
-    }
-
-    if (!like && !dislike && !comment) {
       return res.status(400).json({
         success: false,
         data: {},
-        message: 'Please select like, dislike, or comment'
+        message: 'Feedback does not exists'
+      });
+    }
+
+    if (!like && !dislike && !comment && !status) {
+      return res.status(400).json({
+        success: false,
+        data: {},
+        message: 'Please select like, dislike, comment, or status'
       });
     }
 
@@ -115,6 +113,22 @@ async function feedbackController(req, res) {
         success: true,
         data: populatedComment,
         message: 'Comment added successfully'
+      });
+    }
+
+    if (status) {
+      const updatedFeedback = await Feedback.findByIdAndUpdate(
+        feedbackId,
+        { status: status.toLowerCase() },
+        {
+          new: true
+        }
+      );
+
+      return res.status(200).json({
+        success: true,
+        data: updatedFeedback,
+        message: 'Status updated successfully'
       });
     }
 
