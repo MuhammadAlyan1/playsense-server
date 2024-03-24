@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const feedbackRouter = require('./routes/feedback');
 const profileRouter = require('./routes/profile');
+const serviceRouter = require('./routes/service');
 const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
 const connectDB = require('./db/connection.js');
@@ -31,6 +32,7 @@ app.use('/api/posts', postsRouter);
 app.use('/api/feedback', feedbackRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/match-analytics', matchAnalyticsRouter);
+app.use('/api/service', serviceRouter);
 app.use('/api/jwt', jwtRouter);
 
 mongoose.connection.once('open', () => {
