@@ -7,30 +7,18 @@ const feedbackSchema = new mongoose.Schema(
       required: [true, 'Please enter feedback contents']
     },
     type: {
-      type: [
-        {
-          type: String,
-          enum: ['suggestion', 'bug report', 'change request']
-        }
-      ],
+      type: String,
+      enum: ['suggestion', 'bug report', 'change request'],
       default: ['suggestion']
     },
     game: {
-      type: [
-        {
-          type: String,
-          enum: ['apex legends', 'warzone', 'csgo']
-        }
-      ],
+      type: String,
+      enum: ['apex legends', 'warzone', 'csgo'],
       default: ['apex legends']
     },
     status: {
-      type: [
-        {
-          type: String,
-          enum: ['new', 'under review', 'closed', 'rejected']
-        }
-      ],
+      type: String,
+      enum: ['new', 'under review', 'closed', 'rejected'],
       default: ['new']
     },
     likedBy: {
