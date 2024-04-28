@@ -9,17 +9,17 @@ const feedbackSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: ['suggestion', 'bug report', 'change request'],
-      default: ['suggestion']
+      default: 'suggestion'
     },
     game: {
       type: String,
       enum: ['apex legends', 'warzone', 'csgo'],
-      default: ['apex legends']
+      default: 'apex legends'
     },
     status: {
       type: String,
       enum: ['new', 'under review', 'closed', 'rejected'],
-      default: ['new']
+      default: 'new'
     },
     likedBy: {
       type: [mongoose.Schema.Types.ObjectId],
