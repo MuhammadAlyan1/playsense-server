@@ -25,6 +25,7 @@ const serviceSchema = new mongoose.Schema(
       default: ['apex legends']
     },
     rating: { type: Number, min: 1, max: 5 },
+    reviews: { type: Number, default: 0 },
     total_sales: { type: Number, default: 0 }
   },
 
