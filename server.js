@@ -14,6 +14,7 @@ const serviceRouter = require('./routes/service');
 const orderRouter = require('./routes/order');
 const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
+const paypalRouter = require('./routes/paypal');
 const connectDB = require('./db/connection.js');
 
 connectDB();
@@ -36,6 +37,8 @@ app.use('/api/match-analytics', matchAnalyticsRouter);
 app.use('/api/service', serviceRouter);
 app.use('/api/jwt', jwtRouter);
 app.use('/api/order', orderRouter);
+app.use('/api/paypal', paypalRouter);
+
 mongoose.connection.once('open', () => {
   app.listen(process.env.PORT || 5000, () => {
     console.log(`Listening on port ${process.env.PORT || 5000}`);
