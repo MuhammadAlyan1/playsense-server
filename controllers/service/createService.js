@@ -3,7 +3,15 @@ const Service = require('../../db/model/service');
 async function createService(req, res) {
   const user = req.user;
   const profileId = user.profileId;
-  const { title, description, coverPicture, price, game, status } = req.body;
+  const {
+    title,
+    description,
+    coverPicture,
+    price,
+    game,
+    status,
+    paypalAccountId
+  } = req.body;
 
   if (!profileId) {
     return res.status(400).json({
@@ -13,7 +21,14 @@ async function createService(req, res) {
     });
   }
 
-  if (!title || !description || !coverPicture || !price || !profileId) {
+  if (
+    !title ||
+    !description ||
+    !coverPicture ||
+    !price ||
+    !profileId ||
+    !paypalAccountId
+  ) {
     return res.status(400).json({
       success: false,
       data: {},
@@ -29,7 +44,8 @@ async function createService(req, res) {
       price,
       game: game || 'apex legends',
       status: status || 'active',
-      profileId
+      profileId,
+      paypalAccountId
     });
 
     const newPopulatedService = await Service.findById({
