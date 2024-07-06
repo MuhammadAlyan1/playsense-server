@@ -7,6 +7,10 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please enter service description']
     },
+    paypalAccountId: {
+      type: String,
+      required: [true, 'Please enter PayPal Account ID']
+    },
     profileId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Profile',
