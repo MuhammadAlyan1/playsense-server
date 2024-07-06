@@ -33,9 +33,17 @@ const orderSchema = new mongoose.Schema(
       type: 'string',
       default: 'pending'
     },
+    customerPayment: {
+      type: 'object',
+      default: null
+    },
     sellerPaymentStatus: {
       type: 'string',
       default: 'pending'
+    },
+    sellerPayment: {
+      type: 'object',
+      default: null
     }
   },
   { timestamps: true }
