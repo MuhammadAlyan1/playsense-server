@@ -16,6 +16,8 @@ const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
 const paypalRouter = require('./routes/paypal');
 const connectDB = require('./db/connection.js');
+const cron = require('node-cron');
+const updatedOrderStatus = require('./controllers/cron/UpdateOrderStatus');
 
 connectDB();
 
@@ -42,5 +44,9 @@ app.use('/api/paypal', paypalRouter);
 mongoose.connection.once('open', () => {
   app.listen(process.env.PORT || 5000, () => {
     console.log(`Listening on port ${process.env.PORT || 5000}`);
+
+    cron.schedule('0 0 * * *', () => {
+      updatedOrderStatus();
+    });
   });
 });
