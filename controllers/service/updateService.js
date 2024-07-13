@@ -12,7 +12,7 @@ async function updateService(req, res) {
     game,
     status,
     rating,
-    total_sales
+    totalSales
   } = req.body;
 
   if (!profileId) {
@@ -60,7 +60,7 @@ async function updateService(req, res) {
         game: game || existingService.game,
         status: status || existingService.status,
         rating: rating || existingService.rating,
-        total_sales: total_sales || existingService.total_sales
+        totalSales: totalSales || existingService.totalSales
       },
       { new: true }
     );
