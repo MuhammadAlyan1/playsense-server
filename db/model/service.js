@@ -28,7 +28,7 @@ const serviceSchema = new mongoose.Schema(
       enum: ['apex legends', 'warzone', 'csgo'],
       default: ['apex legends']
     },
-    rating: { type: Number, min: 1, max: 5 },
+    rating: { type: Number },
     reviews: { type: Number, default: 0 },
     totalSales: { type: Number, default: 0 }
   },
