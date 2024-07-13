@@ -50,7 +50,8 @@ const orderSchema = new mongoose.Schema(
       default: ''
     },
     sessionTime: {
-      type: Date
+      type: Date,
+      default: null
     },
     sessionUrl: {
       type: 'string',
