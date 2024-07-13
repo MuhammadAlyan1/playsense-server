@@ -2,6 +2,7 @@ const paypal = require('@paypal/checkout-server-sdk');
 const payouts = require('@paypal/payouts-sdk');
 const mongoose = require('mongoose');
 const Order = require('../../db/model/order');
+const Service = require('../../db/model/service');
 
 const paypalClient = new paypal.core.PayPalHttpClient(
   new paypal.core.SandboxEnvironment(
@@ -47,6 +48,15 @@ const PaymentSuccess = async (req, res) => {
       sellerPaymentStatus: 'paid',
       sellerPayment: payoutResult
     });
+
+    await Service.findOneAndUpdate(
+      { _id: serviceId },
+      {
+        $inc: {
+          totalSales: 1
+        }
+      }
+    );
 
     const newPopulatedOrder = await Order.findById({
       _id: newOrder._id
