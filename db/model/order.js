@@ -22,7 +22,7 @@ const orderSchema = new mongoose.Schema(
       required: [true, 'Please enter seller profile ID.']
     },
     rating: {
-      type: 'string',
+      type: 'number',
       default: 0
     },
     review: {
