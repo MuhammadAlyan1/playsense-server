@@ -44,6 +44,21 @@ const orderSchema = new mongoose.Schema(
     sellerPayment: {
       type: 'object',
       default: null
+    },
+    sellerDiscordId: {
+      type: 'string',
+      default: ''
+    },
+    sessionTime: {
+      type: Date
+    },
+    sessionUrl: {
+      type: 'string',
+      default: ''
+    },
+    sessionAdditionalInformation: {
+      type: 'string',
+      default: ''
     }
   },
   { timestamps: true }
