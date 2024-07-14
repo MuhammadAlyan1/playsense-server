@@ -102,7 +102,8 @@ const profileSchema = new mongoose.Schema(
     mousepad: {
       type: String,
       default: ''
-    }
+    },
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }]
   },
   { timestamps: true }
 );
