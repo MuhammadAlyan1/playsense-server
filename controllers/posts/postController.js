@@ -1,5 +1,7 @@
 const Post = require('../../db/model/post');
 const Comment = require('../../db/model/comment');
+const Profile = require('../../db/model/profile');
+const generateNotification = require('../notification/generateNotification');
 
 async function postController(req, res) {
   const user = req.user;
@@ -29,6 +31,8 @@ async function postController(req, res) {
       });
     }
 
+    const userProfile = await Profile.findById({ _id: profileId });
+
     if (like) {
       const isLiked = post.likedBy.includes(profileId);
       const update = isLiked
@@ -41,6 +45,15 @@ async function postController(req, res) {
       const updatedPost = await Post.findByIdAndUpdate(postId, update, {
         new: true
       });
+
+      if (!isLiked) {
+        generateNotification({
+          senderId: profileId,
+          receiverId: post.profileId,
+          message: `${userProfile.username} liked your post!`,
+          type: 'social'
+        });
+      }
 
       return res.status(200).json({
         success: true,
@@ -93,6 +106,13 @@ async function postController(req, res) {
         { $push: { comments: newComment?._id } },
         { new: true }
       );
+
+      generateNotification({
+        senderId: profileId,
+        receiverId: post.profileId,
+        message: `${userProfile.username} commented on your post!`,
+        type: 'social'
+      });
 
       const populatedComment = await Comment.findById(newComment._id).populate({
         path: 'profileId',
