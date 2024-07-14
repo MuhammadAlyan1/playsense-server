@@ -12,6 +12,7 @@ const feedbackRouter = require('./routes/feedback');
 const profileRouter = require('./routes/profile');
 const serviceRouter = require('./routes/service');
 const orderRouter = require('./routes/order');
+const notificationRouter = require('./routes/notification');
 const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
 const paypalRouter = require('./routes/paypal');
@@ -40,6 +41,7 @@ app.use('/api/service', serviceRouter);
 app.use('/api/jwt', jwtRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/paypal', paypalRouter);
+app.use('/api/notification', notificationRouter);
 
 mongoose.connection.once('open', () => {
   app.listen(process.env.PORT || 5000, () => {
