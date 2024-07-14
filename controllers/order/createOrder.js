@@ -1,4 +1,5 @@
 const Order = require('../../db/model/order');
+const generateNotification = require('../notification/generateNotification');
 
 async function createOrder(req, res) {
   const user = req.user;
@@ -27,6 +28,13 @@ async function createOrder(req, res) {
       serviceId,
       customerId: profileId,
       sellerId
+    });
+
+    generateNotification({
+      senderId: profileId,
+      receiverId: sellerId,
+      message: `You have a new order!`,
+      type: 'skillify'
     });
 
     const newPopulatedOrder = await Order.findById({
