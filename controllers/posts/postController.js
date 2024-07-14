@@ -60,7 +60,7 @@ async function postController(req, res) {
         data: updatedPost,
         message: isLiked
           ? 'Removed like from post successfully.'
-          : 'Liked post succesfully.'
+          : 'Liked post successfully.'
       });
     }
 
