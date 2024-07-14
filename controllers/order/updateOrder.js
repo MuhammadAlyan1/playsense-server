@@ -1,4 +1,5 @@
 const Order = require('../../db/model/order');
+const generateNotification = require('../notification/generateNotification');
 
 const updateOrder = async (req, res) => {
   const user = req.user;
@@ -51,6 +52,13 @@ const updateOrder = async (req, res) => {
       },
       { new: true }
     );
+
+    generateNotification({
+      senderId: existingOrder.sellerId,
+      receiverId: existingOrder.customerId,
+      message: `A session is scheduled for one of your orders.`,
+      type: 'skillify'
+    });
 
     return res.status(200).json({
       success: true,
