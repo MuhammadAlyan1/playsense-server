@@ -1,6 +1,7 @@
 const Order = require('../../db/model/order');
 const Service = require('../../db/model/service');
 const mongoose = require('mongoose');
+const generateNotification = require('../notification/generateNotification');
 
 const addReview = async (req, res) => {
   const user = req.user;
@@ -66,6 +67,13 @@ const addReview = async (req, res) => {
         { rating: rating, reviews: allServiceOrders.length }
       );
     }
+
+    generateNotification({
+      senderId: existingOrder.customerId,
+      receiverId: existingOrder.sellerId,
+      message: `Your order has a new review!`,
+      type: 'skillify'
+    });
 
     return res.status(200).json({
       success: true,
