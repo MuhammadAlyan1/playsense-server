@@ -51,8 +51,16 @@ async function signin(req, res) {
     await User.findByIdAndUpdate({ _id: user._id }, { refreshToken });
     const userProfile = await Profile.findOne({ userId: user._id });
 
-    res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Strict'
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Strict'
+    });
 
     return res.status(200).json({
       success: true,
