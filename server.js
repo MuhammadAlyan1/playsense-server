@@ -16,6 +16,7 @@ const notificationRouter = require('./routes/notification');
 const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
 const paypalRouter = require('./routes/paypal');
+const reportRouter = require('./routes/report');
 const connectDB = require('./db/connection.js');
 const cron = require('node-cron');
 const updatedOrderStatus = require('./controllers/cron/UpdateOrderStatus');
@@ -42,6 +43,7 @@ app.use('/api/jwt', jwtRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/paypal', paypalRouter);
 app.use('/api/notification', notificationRouter);
+app.use('/api/report', reportRouter);
 
 mongoose.connection.once('open', () => {
   app.listen(process.env.PORT || 5000, () => {
