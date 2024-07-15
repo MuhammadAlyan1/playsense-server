@@ -54,12 +54,12 @@ async function signin(req, res) {
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict'
+      sameSite: 'None'
     });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict'
+      sameSite: 'None'
     });
 
     return res.status(200).json({
