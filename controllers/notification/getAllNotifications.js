@@ -17,7 +17,8 @@ const getAllNotifications = async (req, res) => {
     isRead: { $in: read }
   })
     .populate({ path: 'senderId', model: 'Profile' })
-    .populate({ path: 'receiverId', model: 'Profile' });
+    .populate({ path: 'receiverId', model: 'Profile' })
+    .sort({ createdAt: -1 });
 
   return res.status(200).json({
     success: true,
