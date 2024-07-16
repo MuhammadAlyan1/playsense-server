@@ -67,8 +67,16 @@ async function signup(req, res) {
       { _id: newUser._id },
       { refreshToken, profileId: newProfile._id }
     );
-    res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None'
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None'
+    });
     return res.status(201).json({
       success: true,
       data: {
