@@ -9,9 +9,16 @@ async function signout(req, res) {
     console.log(req.user);
     await User.updateOne({ _id: userId }, { refreshToken: null });
 
-    // Clear cookies (optional)
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None'
+    });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None'
+    });
 
     return res.status(200).json({
       success: true,
