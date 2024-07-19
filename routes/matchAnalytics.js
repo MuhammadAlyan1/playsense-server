@@ -6,9 +6,10 @@ const getAllMatchAnalytics = require('../controllers/matchAnalytics/getAllMatchA
 // const deleteUser = require('../controllers/matchAnalytics/deleteUser');
 // const signout = require('../controllers/matchAnalytics/signout');
 const verifyJwtToken = require('../middleware/verifyJwtToken');
-
+const getStatistics = require('../controllers/matchAnalytics/getStatistics');
 router.post('/', verifyJwtToken, createMatchAnalytics);
 router.get('/', getAllMatchAnalytics);
+router.get('/statistics/:profileId', verifyJwtToken, getStatistics);
 
 // router.post('/signup', signup);
 // router.post('/signout', verifyJwtToken, signout);
