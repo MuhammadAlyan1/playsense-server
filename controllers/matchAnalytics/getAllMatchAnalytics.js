@@ -14,7 +14,7 @@ async function getAllMatchAnalytics(req, res) {
 
     if (matchAnalytics.length === 0) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: true, data: [], message: 'No match analytics found' });
     }
 
