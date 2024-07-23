@@ -27,7 +27,9 @@ const Message = require('./db/model/message.js');
 const Conversation = require('./db/model/conversation.js');
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range']
 };
 
 app.use(cors(corsOptions));
