@@ -55,7 +55,8 @@ mongoose.connection.once('open', () => {
       origin: process.env.FRONTEND_URL,
       methods: ['GET', 'POST'],
       credentials: true
-    }
+    },
+    transports: ['websocket', 'polling']
   });
 
   io.on('connection', (socket) => {
