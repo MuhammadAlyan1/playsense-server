@@ -20,9 +20,11 @@ const reportRouter = require('./routes/report');
 const connectDB = require('./db/connection.js');
 const cron = require('node-cron');
 const updatedOrderStatus = require('./controllers/cron/UpdateOrderStatus');
-
 connectDB();
-
+const { Server } = require('socket.io');
+const http = require('http');
+const Message = require('./db/model/message.js');
+const Conversation = require('./db/model/conversation.js');
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
   credentials: true
@@ -46,7 +48,68 @@ app.use('/api/notification', notificationRouter);
 app.use('/api/report', reportRouter);
 
 mongoose.connection.once('open', () => {
-  app.listen(process.env.PORT || 5000, () => {
+  const server = http.createServer(app);
+
+  const io = new Server(server, {
+    cors: {
+      origin: process.env.FRONTEND_URL,
+      methods: ['GET', 'POST'],
+      credentials: true
+    }
+  });
+
+  io.on('connection', (socket) => {
+    console.log('We are live and connected');
+
+    socket.on('getConversations', async (data) => {
+      if (!data.connectedUserId) return;
+      const conversations = await Conversation.find({
+        profiles: { $in: [new mongoose.Types.ObjectId(data.connectedUserId)] }
+      })
+        .populate('profiles')
+        .populate('messages');
+      io.emit('getConversations', {
+        conversations
+      });
+    });
+
+    socket.on('disconnect', () => {
+      console.log('User disconnected');
+    });
+
+    socket.on('sendMessage', async (data) => {
+      if (!data?.senderId || !data?.receiverId || !data?.contents?.trim()) {
+        console.log('Please enter senderId, receiverId, and contents.');
+        return;
+      }
+      const newMessage = await Message.create({
+        senderId: data.senderId,
+        receiverId: data.receiverId,
+        contents: data.contents
+      });
+
+      const profiles =
+        data.senderId > data.receiverId
+          ? [data.senderId, data.receiverId]
+          : [data.receiverId, data.senderId];
+      const conversationId = profiles.join('-');
+
+      const updatedConversation = await Conversation.findOneAndUpdate(
+        { conversationId },
+        {
+          profiles,
+          conversationId,
+          $push: { messages: newMessage._id }
+        },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      )
+        .populate('profiles')
+        .populate('messages');
+      io.emit('sendMessage', updatedConversation);
+    });
+  });
+
+  server.listen(process.env.PORT || 5000, () => {
     console.log(`Listening on port ${process.env.PORT || 5000}`);
 
     cron.schedule('0 0 * * *', () => {
