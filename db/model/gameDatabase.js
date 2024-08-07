@@ -8,40 +8,105 @@ const gameDatabaseSchema = new mongoose.Schema(
       enum: ['weapon', 'legend']
     },
     weaponType: {
-      type: String
+      type: String,
+      default: ''
     },
     weaponName: {
-      type: String
+      type: String,
+      default: ''
     },
     ammoType: {
-      type: [String]
+      type: [String],
+      default: []
     },
     fireMode: {
-      type: [String]
+      type: [String],
+      default: []
     },
     attachments: {
-      type: [String]
+      type: [String],
+      default: []
     },
     weaponImage: {
-      type: String
+      type: String,
+      default: ''
     },
     weaponIcon: {
-      type: String
+      type: String,
+      default: ''
     },
     bodyDamage: {
-      type: Number
+      type: Number,
+      default: 0
     },
     headshotDamage: {
-      type: Number
+      type: Number,
+      default: 0
     },
     legDamage: {
-      type: Number
+      type: Number,
+      default: 0
     },
     damagePerSecond: {
-      type: Number
+      type: Number,
+      default: 0
     },
     game: {
-      type: String
+      type: String,
+      default: ''
+    },
+
+    legendImage: {
+      type: String,
+      default: ''
+    },
+    legendIcon: {
+      type: String,
+      default: ''
+    },
+    legendClass: {
+      type: String,
+      default: ''
+    },
+    legendName: {
+      type: String,
+      default: ''
+    },
+    passiveAbilityName: {
+      type: String,
+      default: ''
+    },
+    tacticalAbilityName: {
+      type: String,
+      default: ''
+    },
+    ultimateAbilityName: {
+      type: String,
+      default: ''
+    },
+    passiveAbilityDescription: {
+      type: String,
+      default: ''
+    },
+    tacticalAbilityDescription: {
+      type: String,
+      default: ''
+    },
+    ultimateAbilityDescription: {
+      type: String,
+      default: ''
+    },
+    passiveAbilityIcon: {
+      type: String,
+      default: ''
+    },
+    tacticalAbilityIcon: {
+      type: String,
+      default: ''
+    },
+    ultimateAbilityIcon: {
+      type: String,
+      default: ''
     },
     addedBy: {
       type: mongoose.Schema.Types.ObjectId,
