@@ -17,6 +17,7 @@ const matchAnalyticsRouter = require('./routes/matchAnalytics');
 const jwtRouter = require('./routes/jwt');
 const paypalRouter = require('./routes/paypal');
 const reportRouter = require('./routes/report');
+const gameDatabaseRouter = require('./routes/gameDatabase.js');
 const connectDB = require('./db/connection.js');
 const cron = require('node-cron');
 const updatedOrderStatus = require('./controllers/cron/UpdateOrderStatus');
@@ -48,6 +49,7 @@ app.use('/api/order', orderRouter);
 app.use('/api/paypal', paypalRouter);
 app.use('/api/notification', notificationRouter);
 app.use('/api/report', reportRouter);
+app.use('/api/game-database', gameDatabaseRouter);
 
 mongoose.connection.once('open', () => {
   const server = http.createServer(app);
